@@ -4,7 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainComponent } from './main/main.component';
+import { MainComponent } from './components/main/main.component';
+import { HeaderComponent } from './components/header/header.component';
+import { LecteurComponent } from './components/lecteur/lecteur.component';
+import { ItemMusiqueComponent } from './components/item-musique/item-musique.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +15,9 @@ import { MainComponent } from './main/main.component';
     MainComponent
   ],
   imports: [
+    HeaderComponent,
+    LecteurComponent,
+    ItemMusiqueComponent,
     BrowserAnimationsModule,
     NoopAnimationsModule,
     BrowserModule,
