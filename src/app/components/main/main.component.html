@@ -1,4 +1,7 @@
-<app-header></app-header>
-<div>
+<div class="mx-auto col-xl-8 col-12 border-main">
+    <div *ngFor="let musique of listMusiques">
+        <span>{{musique.titre}}</span>
+        <span>{{musique.duree}}</span>
+        <span>{{musique.id_Artiste}}</span>
+    </div>
 </div>
-<app-lecteur></app-lecteur>

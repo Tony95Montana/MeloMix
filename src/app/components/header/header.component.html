@@ -1,1 +1,24 @@
-<p>header works!</p>
+<div class="header col-12 row mx-auto">
+    <button class="button_menu" (click)="menu()">
+        <mat-icon *ngIf="!flagMenu" class="menu_ico">menu icon</mat-icon>
+        <mat-icon *ngIf="flagMenu"class="menu_ico">close</mat-icon>
+    </button>
+    <div #thisMenu class="menu p-3 row mx-auto align-content-start" style="display: none">
+        <a class="text-white w-100 my-2 d-block p-0" routerLink="/"><mat-icon class="link_ico">home</mat-icon>Accueil</a>
+        <button class="text-white w-100 my-2 d-block p-0 w-auto" (click)="playlist()">
+            <mat-icon class="link_ico">library_music</mat-icon>
+            Mes Playlists
+            <mat-icon *ngIf="!flagPlaylist" class="align-bottom">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="flagPlaylist" class="align-bottom">keyboard_arrow_up</mat-icon>
+        </button>
+        <button *ngIf="flagPlaylist" class="text-white-50 top-5 position-relative w-auto p-0"><mat-icon>add_to_photos</mat-icon></button>
+        <div #menuplaylist class="text-white p-0" style="display: none">
+            <span *ngIf="playlists.length == 0">Vous n'avez aucune playlist</span>
+            <div *ngFor="let playlist of playlists">
+            </div>
+        </div>
+    </div>
+    <div class="col-6 py-3 mx-auto">
+        <input type="text" class="form-control">
+    </div>
+</div>

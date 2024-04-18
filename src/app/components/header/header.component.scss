@@ -1,0 +1,34 @@
+@import "/src/assets/variable.scss";
+
+.header {
+    position: fixed;
+    background-color: $black1;
+    z-index: 1000;
+}
+.button_menu {
+    position: absolute;
+    padding: 0;
+    width: auto;
+    top: 10px;
+    left: 10px;
+    color: whitesmoke;
+}
+.menu_ico {
+    font-size: xxx-large;
+    width: 40px;
+}
+.menu {
+    position: fixed;
+    left: 0;
+    top: 50px;
+    padding: 0;
+    width: 230px;
+    background-color: $black1;
+    height: calc(100vh - 50px);
+}
+.link_ico {
+    vertical-align: bottom;
+    width: auto;
+    font-size: xx-large;
+    margin-right: 5px;
+}
