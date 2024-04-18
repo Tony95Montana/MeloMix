@@ -12,10 +12,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog'; 
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FormsModule } from '@angular/forms';
 import { SearchComponent } from './components/search/search.component';
 import { AddPlaylistComponent } from './components/forms/add-playlist/add-playlist.component';
 import { InscriptionComponent } from './components/forms/inscription/inscription.component';
 import { ConnectionComponent } from './components/forms/connection/connection.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { ConnectionComponent } from './components/forms/connection/connection.co
     ConnectionComponent
   ],
   imports: [
+    FormsModule,
     HttpClientModule,
     MatIconModule,
     MatDialogModule,
@@ -37,7 +40,8 @@ import { ConnectionComponent } from './components/forms/connection/connection.co
     BrowserAnimationsModule,
     NoopAnimationsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ToastrModule.forRoot({ positionClass: 'toast-bottom-right'})
   ],
   providers: [],
   bootstrap: [AppComponent]

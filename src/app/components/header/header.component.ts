@@ -39,10 +39,14 @@ export class HeaderComponent implements OnInit{
     this.flagPlaylist = !this.flagPlaylist;
   }
   createPlaylist(): void {
-    let dialogRef = this.dialog.open(AddPlaylistComponent, {
+    this.dialog.open(AddPlaylistComponent, {
       height: '80vh',
       width: '40vw',
       panelClass: ['bg-white', 'rounded', 'p-3']
+    }).closed.subscribe((res: Playlist | unknown) => {
+      if (res) {
+        this.playlists.push(<Playlist>res);
+      }
     });
   }
   connection(): void {
