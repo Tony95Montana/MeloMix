@@ -1,9 +1,16 @@
 <div class="footer">
     <div class="lecteur col-12 col-xl-8 mx-auto row px-3">
-        <img src="assets/img/no_pochete.jpg" class="pochete my-1">
-        <div class="col my-1 text-white">
-            <span>Titre</span>
-            <span>Durée</span>
+        <img src="assets/img/no_pochete.jpg" class="pochete my-2">
+        <div class="col mx-auto text-white row pt-1">
+            <span class="col-12">{{musiqueEnCours?.titre}}Titre</span>
+            <mat-progress-bar class="col-12" color="accent" mode="buffer" [value]="musiqueEnCours?.duree" [bufferValue]="0"></mat-progress-bar>
+            <div class="col-6 mx-auto text-center">
+                <button class="text-white"><mat-icon>skip_previous</mat-icon></button>
+                <button class="text-white" (click)="play()"><mat-icon *ngIf="!playflag">play_arrow</mat-icon><mat-icon *ngIf="playflag">pause</mat-icon></button>
+                <button class="text-white" (click)="stop()"><mat-icon>stop</mat-icon></button>
+                <button class="text-white"><mat-icon>skip_next</mat-icon></button>
+                <span class="position-absolute text-end col-3">{{musiqueEnCours?.duree}}Durée</span>
+            </div>
         </div>
     </div>
 </div>

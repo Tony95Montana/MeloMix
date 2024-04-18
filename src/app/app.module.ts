@@ -9,8 +9,13 @@ import { HeaderComponent } from './components/header/header.component';
 import { LecteurComponent } from './components/lecteur/lecteur.component';
 import { ItemMusiqueComponent } from './components/item-musique/item-musique.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MatIconModule } from '@angular/material/icon'; 
+import { MatDialogModule } from '@angular/material/dialog'; 
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { SearchComponent } from './components/search/search.component';
+import { AddPlaylistComponent } from './components/forms/add-playlist/add-playlist.component';
+import { InscriptionComponent } from './components/forms/inscription/inscription.component';
+import { ConnectionComponent } from './components/forms/connection/connection.component';
 
 @NgModule({
   declarations: [
@@ -19,11 +24,16 @@ import { SearchComponent } from './components/search/search.component';
     HeaderComponent,
     LecteurComponent,
     ItemMusiqueComponent,
-    SearchComponent
+    SearchComponent,
+    AddPlaylistComponent,
+    InscriptionComponent,
+    ConnectionComponent
   ],
   imports: [
     HttpClientModule,
     MatIconModule,
+    MatDialogModule,
+    MatProgressBarModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
     BrowserModule,

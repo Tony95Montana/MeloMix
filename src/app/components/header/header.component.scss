@@ -13,18 +13,36 @@
     left: 10px;
     color: whitesmoke;
 }
-.menu_ico {
+.button_user {
+    position: absolute;
+    padding: 0;
+    width: auto;
+    top: 10px;
+    right: 10px;
+    color: whitesmoke;
+}
+.menu_ico, .menu_ico2 {
     font-size: xxx-large;
+}
+.menu_ico {
     width: 40px;
 }
+.menu_ico2 {
+    width: 50px;
+}
 .menu {
-    position: fixed;
     left: 0;
-    top: 50px;
-    padding: 0;
+    height: calc(100vh - 69px);
+}
+.menu2 {
+    right: 0;
+    border-radius: 0px 0px 0 8px;
+}
+.menu, .menu2 {
+    position: fixed;
+    top: 69px;
     width: 230px;
     background-color: $black1;
-    height: calc(100vh - 50px);
 }
 .link_ico {
     vertical-align: bottom;
