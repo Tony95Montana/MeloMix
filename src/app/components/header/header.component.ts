@@ -4,6 +4,8 @@ import { Playlist } from 'src/app/model/Playlist';
 import { AddPlaylistComponent } from '../forms/add-playlist/add-playlist.component';
 import { InscriptionComponent } from '../forms/inscription/inscription.component';
 import { ConnectionComponent } from '../forms/connection/connection.component';
+import { PlaylistService } from 'src/app/service/playlist.service';
+import { PlaylistComponent } from '../playlist/playlist.component';
 
 @Component({
   selector: 'app-header',
@@ -20,9 +22,13 @@ export class HeaderComponent implements OnInit{
   @ViewChild("thisMenu2") thisMenu2!: ElementRef;
   @ViewChild("menuplaylist") menuplaylist!: ElementRef;
 
-  constructor(private readonly dialog: Dialog) { }
+  constructor(private readonly dialog: Dialog, private readonly playService: PlaylistService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.playService.getAllByUser(1).subscribe(res => {
+      this.playlists = res;
+    });
+  }
   menu(): void {
     if (this.flagMenu) this.thisMenu.nativeElement.style.display = "none";
     else this.thisMenu.nativeElement.style.display = "flex";
@@ -49,15 +55,23 @@ export class HeaderComponent implements OnInit{
       }
     });
   }
+  openPlaylist(playlist: Playlist): void {
+    this.dialog.open(PlaylistComponent, {
+      height: '80vh',
+      width: '80vw',
+      panelClass: ['bg-white', 'rounded', 'p-3'],
+      data: { playlist: playlist }
+    });
+  }
   connection(): void {
-    let dialogRef = this.dialog.open(ConnectionComponent, {
+    this.dialog.open(ConnectionComponent, {
       height: '80vh',
       width: '40vw',
       panelClass: ['bg-white', 'rounded', 'p-3']
     });
   }
   inscription(): void {
-    let dialogRef = this.dialog.open(InscriptionComponent, {
+    this.dialog.open(InscriptionComponent, {
       height: '80vh',
       width: '40vw',
       panelClass: ['bg-white', 'rounded', 'p-3']

@@ -18,7 +18,6 @@ button {
     border: none;
 }
 a {
-    cursor: pointer;
     text-decoration: none;
 }
 .mat-icon {
@@ -31,7 +30,15 @@ a {
     top: 5px;
 }
 .close {
+    width: 38%;
+}
+.close2 {
+    width: 78%;
+}
+.close, .close2 {
     position: absolute;
     text-align: end;
-    width: 38%;
+}
+.click, a {
+    cursor: pointer;
 }

@@ -1,7 +1,15 @@
-<div class="mx-auto col-xl-8 col-12 border-main">
+<div class="mx-auto p-3 col-xl-8 col-12 border-main">
+    <h3>Écouter récemment</h3>
     <div *ngFor="let musique of listMusiques">
         <span>{{musique.titre}}</span>
         <span>{{musique.duree}}</span>
         <span>{{musique.id_Artiste}}</span>
+    </div>
+    <h3>Styles</h3>
+    <div class="row col-12 mx-auto">
+        <div *ngFor="let style of listStyles" class="col-3 text-center style mx-2">
+            <span>{{style.nom}}</span>
+            <span>{{style.image}}</span>
+        </div>
     </div>
 </div>
