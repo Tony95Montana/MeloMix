@@ -4,11 +4,13 @@
     <div class="col-12">
         <img [src]="style.image" class="item_image" alt="photo de la pochette">
     </div>
-    <div *ngFor="let musique of style.Musique" class="row col-xl-8 col-12 mx-auto align-items-center">
-        <img class="col-auto rounded-pill" [src]="musique.pochette" alt="image de la pochette">
-        <span class="col text-start p-0">{{musique.titre}}</span>
-        <span class="col-1">{{musique.annee}}</span>
-        <span class="col-1">{{convert(musique.duree)}}</span>
+    <div *ngFor="let musique of style.Musique" class="col-xl-8 col-12 mx-auto">
+        <div class="row col-12 mx-auto align-items-center click" (click)="lecture(musique)">
+            <img class="col-auto rounded-pill" [src]="musique.pochette" alt="image de la pochette">
+            <span class="col text-start p-0">{{musique.titre}}</span>
+            <span class="col-1">{{musique.annee}}</span>
+            <span class="col-1">{{convert(musique.duree)}}</span>
+        </div>
         <hr class="mt-1">
     </div>
 </div>

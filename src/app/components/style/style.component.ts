@@ -1,6 +1,8 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component, OnInit } from '@angular/core';
+import { Musique } from 'src/app/model/Musique';
 import { Style } from 'src/app/model/Style';
+import { LectureService } from 'src/app/service/lecture.service';
 
 @Component({
   selector: 'app-style',
@@ -10,11 +12,14 @@ import { Style } from 'src/app/model/Style';
 export class StyleComponent implements OnInit {
   style: Style;
 
-  constructor(private readonly dialogRef: DialogRef) {
+  constructor(private readonly lectureService: LectureService, private readonly dialogRef: DialogRef) {
     this.style = dialogRef.config.data.style;
   }
 
   ngOnInit(): void {}
+  lecture(musique: Musique): void {
+    this.lectureService.updateNumero(musique.id.toString());
+  }
   closeClick(): void {
     this.dialogRef.close();
   }
