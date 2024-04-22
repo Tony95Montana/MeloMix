@@ -1,4 +1,23 @@
 <div class="row col-12 mx-auto">
     <h1 class="text-center">Inscription</h1>
     <button class="close" (click)="closeClick()"><mat-icon>close</mat-icon></button>
+    <span>Nom</span>
+    <input type="text" [(ngModel)]="nom" class="form-control mx-4 col">
+    <span>Prénom</span>
+    <input type="text" [(ngModel)]="prenom" class="form-control mx-4 col">
+    <span>Mail</span>
+    <input type="text" [(ngModel)]="mail" class="form-control mx-4 col">
+    <span>Téléphone</span>
+    <input type="text" [(ngModel)]="tel" class="form-control mx-4 col">
+    <span>Mot de passe</span>
+    <input type="text" [(ngModel)]="mdp" class="form-control mx-4 col">
+    <span>Photo de profil</span>
+    <div class="col-8 mt-2 mb-3 ms-3 p-0">
+        <input type="file" accept="image/*" class="btn btn-dark px-1 text-start w-100" (change)="selectFile($event)" />
+    </div>
+    <img *ngIf="preview" [src]="preview" class="col-3 mt-2">
+    <div class="row col-12 mt-2 mx-auto">
+        <button class="col-4 btn mx-auto btn-outline-danger" (click)="closeClick()">Annuler</button>
+        <button class="col-4 btn mx-auto btn-info text-white" (click)="createUtilisateur()">Créer</button>
+    </div>
 </div>

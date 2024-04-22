@@ -42,3 +42,15 @@ a {
 .click, a {
     cursor: pointer;
 }
+.z-index {
+    z-index: 1000;
+}
+.z-index1 {
+    z-index: 100;
+}
+.item_image {
+    max-height: 35vh;
+    width: auto;
+    margin: auto;
+    border-radius: 20px;
+}

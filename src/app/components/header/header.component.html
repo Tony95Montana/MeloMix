@@ -1,4 +1,4 @@
-<div class="header col-12 row mx-auto">
+<div class="header z-index col-12 row mx-auto">
     <button class="button_menu" (click)="menu()">
         <mat-icon *ngIf="!flagMenu" class="menu_ico">menu icon</mat-icon>
         <mat-icon *ngIf="flagMenu"class="menu_ico">close</mat-icon>
@@ -14,8 +14,8 @@
         <button *ngIf="flagPlaylist" (click)="createPlaylist()" class="text-white-50 top-5 position-relative w-auto p-0"><mat-icon>add_to_photos</mat-icon></button>
         <div #menuplaylist class="text-white p-0 bloc_playlist" style="display: none">
             <span *ngIf="playlists.length == 0">Vous n'avez aucune playlist</span>
-            <div *ngFor="let playlist of playlists" class="row col-12 mx-auto text-center rounded click" (click)="openPlaylist(playlist)">
-                <img class="w-75 mx-auto p-0" [src]="playlist.pochette" alt="photo pochette playlist">
+            <div *ngFor="let playlist of playlists" class="row col-12 mx-auto text-center click" (click)="openPlaylist(playlist)">
+                <img class="w-75 mx-auto rounded p-0" [src]="playlist.pochette" alt="photo pochette playlist">
                 <span>{{playlist.nom}}</span>
                 <hr/>
             </div>
@@ -25,7 +25,8 @@
         <input type="text" class="form-control">
     </div>
     <button class="button_user" (click)="menu2()">
-        <mat-icon class="menu_ico2">account_circle</mat-icon>
+        <img *ngIf="flagConnecter && currentUser.image != ''" [src]="currentUser.image" alt="photo de profil de l'utilisateur">
+        <mat-icon *ngIf="!flagConnecter || currentUser.image == ''" class="menu_ico2">account_circle</mat-icon>
     </button>
     <div #thisMenu2 class="menu2 px-3 row mx-auto align-content-start" style="display: none">
         <button class="text-white btn btn-outline-info my-2" *ngIf="!flagConnecter" (click)="inscription()">Inscription</button>

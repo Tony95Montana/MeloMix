@@ -2,6 +2,7 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Playlist } from 'src/app/model/Playlist';
+import { Utilisateur } from 'src/app/model/Utilisateur';
 import { PlaylistService } from 'src/app/service/playlist.service';
 
 @Component({
@@ -38,10 +39,9 @@ export class AddPlaylistComponent implements OnInit {
             nom: this.nom,
             description: this.description,
             pochette: pochette,
-            id_utilisateur: 1,
+            Utilisateur: {} as Utilisateur,
             list_musique: ""
           }
-          console.log(playlist);
           this.playlistService.add(playlist).subscribe(res => {
             if (res) this.dialogRef.close(playlist);
             else this.toast.error("Erreur dans la création d'une playlist", "Erreur Inconnue");

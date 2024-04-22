@@ -6,13 +6,15 @@ import { InscriptionComponent } from '../forms/inscription/inscription.component
 import { ConnectionComponent } from '../forms/connection/connection.component';
 import { PlaylistService } from 'src/app/service/playlist.service';
 import { PlaylistComponent } from '../playlist/playlist.component';
+import { Utilisateur } from 'src/app/model/Utilisateur';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
+  currentUser!: Utilisateur;
   flagMenu = false;
   flagMenu2 = false;
   flagPlaylist = false;
@@ -56,6 +58,9 @@ export class HeaderComponent implements OnInit{
     });
   }
   openPlaylist(playlist: Playlist): void {
+    this.menu();
+    this.playlist();
+    if (this.flagMenu2) this.menu2();
     this.dialog.open(PlaylistComponent, {
       height: '80vh',
       width: '80vw',
@@ -71,10 +76,18 @@ export class HeaderComponent implements OnInit{
     });
   }
   inscription(): void {
+    this.menu2();
+    if (this.flagMenu) this.menu();
+    if (this.flagPlaylist) this.playlist();
     this.dialog.open(InscriptionComponent, {
       height: '80vh',
       width: '40vw',
       panelClass: ['bg-white', 'rounded', 'p-3']
+    }).closed.subscribe((res: Utilisateur | unknown) => {
+      if (res) {
+        this.flagConnecter = true;
+        this.currentUser = <Utilisateur>res;
+      }
     });
   }
 }

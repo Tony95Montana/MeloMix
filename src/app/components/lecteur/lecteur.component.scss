@@ -13,4 +13,12 @@
     padding: 0;
     border: 1px solid whitesmoke;
     border-radius: 8px;
+    object-fit: cover;
+}
+.titre {
+    min-height: 24px;
+}
+.timer {
+    margin-top: 28px;
+    margin-left: 10px;
 }

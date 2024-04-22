@@ -19,6 +19,9 @@ export class MusiqueService {
   getAll(): Observable<Musique[]> {
     return this.http.get<Musique[]>(this.url, this.httpOptions);
   }
+  getOne(id: number | string): Observable<Musique> {
+    return this.http.get<Musique>(this.url + "/" + id, this.httpOptions);
+  }
   searchOne(): Observable<Musique[]> {
     return this.http.get<Musique[]>(this.url, this.httpOptions); // Faire url
   }

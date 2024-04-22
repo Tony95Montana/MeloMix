@@ -5,4 +5,5 @@ export interface Utilisateur {
     email: string;
     telephone: string;
     mdp: string;
+    image: string
 }

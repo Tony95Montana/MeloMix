@@ -1,15 +1,16 @@
-<div class="mx-auto p-3 col-xl-8 col-12 border-main">
+<div class="mx-auto pb-4 p-3 col-xl-8 col-12 border-main overflow-auto">
     <h3>Écouter récemment</h3>
-    <div *ngFor="let musique of listMusiques">
-        <span>{{musique.titre}}</span>
-        <span>{{musique.duree}}</span>
-        <span>{{musique.id_Artiste}}</span>
+    <div *ngFor="let musique of listMusiques" class="row col-3 px-2 style mx-auto">
+        <span class="col-12 text-center fwt-bold click" (click)="lecture(musique)">{{musique.titre}}</span>
+        <img class="col-12 p-0 click" [src]="musique.pochette" (click)="lecture(musique)" alt="image de la pochette de la musique"/>
+        <button class="col-auto px-1 text-white z-index1" (click)="openArtiste(musique.Artiste)">{{musique.Artiste.nom}}</button>
+        <span class="col text-end fst-italic click" (click)="lecture(musique)">{{convert(musique.duree)}}</span>
     </div>
     <h3>Styles</h3>
     <div class="row col-12 mx-auto">
-        <div *ngFor="let style of listStyles" class="col-3 text-center style mx-2">
-            <span>{{style.nom}}</span>
-            <span>{{style.image}}</span>
+        <div *ngFor="let style of listStyles" class="col-3 text-center style mx-2 click" (click)="openStyle(style)">
+            <span class="fst-italic">{{style.nom}}</span>
+            <img [src]="style.image" alt="image du style de musique"/>
         </div>
     </div>
 </div>

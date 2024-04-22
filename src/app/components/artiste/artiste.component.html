@@ -1,0 +1,11 @@
+<div class="row col-12 mx-auto">
+    <h1 class="text-center">{{artiste.nom}}</h1>
+    <button class="close2" (click)="closeClick()"><mat-icon>close</mat-icon></button>
+    <img class="item_image" [src]="artiste.image" alt="image de l'artiste">
+    <div *ngFor="let musique of artiste.Musique">
+        <img [src]="musique.pochette" alt="image de la pochette">
+        <span>{{musique.titre}}</span>
+        <span>{{musique.duree}}</span>
+        <span>{{musique.annee}}</span>
+    </div>
+</div>

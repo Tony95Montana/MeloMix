@@ -1,8 +1,12 @@
+import { Artiste } from "./Artiste";
+import { Style } from "./Style";
+
 export interface Musique {
     id: number;
     titre: string;
     duree: number;
     annee: number;
-    id_style: number;
-    id_Artiste: number;
+    pochette: string;
+    Style: Style;
+    Artiste: Artiste;
 }

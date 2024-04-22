@@ -19,6 +19,8 @@ import { InscriptionComponent } from './components/forms/inscription/inscription
 import { ConnectionComponent } from './components/forms/connection/connection.component';
 import { ToastrModule } from 'ngx-toastr';
 import { PlaylistComponent } from './components/playlist/playlist.component';
+import { ArtisteComponent } from './components/artiste/artiste.component';
+import { StyleComponent } from './components/style/style.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { PlaylistComponent } from './components/playlist/playlist.component';
     AddPlaylistComponent,
     InscriptionComponent,
     ConnectionComponent,
-    PlaylistComponent
+    PlaylistComponent,
+    ArtisteComponent,
+    StyleComponent
   ],
   imports: [
     FormsModule,
