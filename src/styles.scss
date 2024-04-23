@@ -4,13 +4,16 @@
 
 .border-main {
     position: relative;
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px;
     box-shadow: 20px 20px rgba(0, 0, 0, .15);
     transition: all .4s ease;
     background-color: rgba(0, 0, 0, 0.25);
 }
+.border-main {
+    height: calc(100vh - 180px);
+}
 .border-main:hover {
-    border-radius: 8px 8px 50% 50% / 8px 8px 5% 5%;
+    border-radius: 8px 8px 8px 8px/ 8px 8px 8px 8px;
     box-shadow: 10px 10px $black1;
 }
 button {
@@ -53,4 +56,20 @@ a {
     width: auto;
     margin: auto;
     border-radius: 20px;
+}
+@-moz-document url-prefix() {
+    .overflow-auto {
+        scrollbar-width: thin;
+        scrollbar-color: $scroll-bar-color transparent;
+    }
+}
+.overflow-auto::-webkit-scrollbar {
+    background-color: transparent;
+    width: 16px;
+}
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: $scroll-bar-color;
+    border-radius: 8px;
+    background-clip: padding-box;
+    border: 4px solid transparent;
 }

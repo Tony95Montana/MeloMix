@@ -7,6 +7,7 @@ import { ConnectionComponent } from '../forms/connection/connection.component';
 import { PlaylistService } from 'src/app/service/playlist.service';
 import { PlaylistComponent } from '../playlist/playlist.component';
 import { Utilisateur } from 'src/app/model/Utilisateur';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ import { Utilisateur } from 'src/app/model/Utilisateur';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
+  navBar = "";
   currentUser!: Utilisateur;
   flagMenu = false;
   flagMenu2 = false;
@@ -24,12 +26,15 @@ export class HeaderComponent implements OnInit {
   @ViewChild("thisMenu2") thisMenu2!: ElementRef;
   @ViewChild("menuplaylist") menuplaylist!: ElementRef;
 
-  constructor(private readonly dialog: Dialog, private readonly playService: PlaylistService) { }
+  constructor(private readonly router: Router, private readonly dialog: Dialog, private readonly playService: PlaylistService) { }
 
   ngOnInit(): void {
     this.playService.getAllByUser(1).subscribe(res => {
       this.playlists = res;
     });
+  }
+  onEnter(): void {
+    if (this.navBar != "") this.router.navigateByUrl('/recherche', { state: { query: this.navBar } });
   }
   menu(): void {
     if (this.flagMenu) this.thisMenu.nativeElement.style.display = "none";
@@ -48,7 +53,7 @@ export class HeaderComponent implements OnInit {
   }
   createPlaylist(): void {
     this.dialog.open(AddPlaylistComponent, {
-      height: '80vh',
+      maxHeight: '80vh',
       width: '40vw',
       panelClass: ['bg-white', 'rounded', 'p-3']
     }).closed.subscribe((res: Playlist | unknown) => {
@@ -62,7 +67,7 @@ export class HeaderComponent implements OnInit {
     this.playlist();
     if (this.flagMenu2) this.menu2();
     this.dialog.open(PlaylistComponent, {
-      height: '80vh',
+      maxHeight: '80vh',
       width: '80vw',
       panelClass: ['bg-white', 'rounded', 'p-3'],
       data: { playlist: playlist }
@@ -70,7 +75,7 @@ export class HeaderComponent implements OnInit {
   }
   connection(): void {
     this.dialog.open(ConnectionComponent, {
-      height: '80vh',
+      maxHeight: '80vh',
       width: '40vw',
       panelClass: ['bg-white', 'rounded', 'p-3']
     });
@@ -80,7 +85,7 @@ export class HeaderComponent implements OnInit {
     if (this.flagMenu) this.menu();
     if (this.flagPlaylist) this.playlist();
     this.dialog.open(InscriptionComponent, {
-      height: '80vh',
+      maxHeight: '80vh',
       width: '40vw',
       panelClass: ['bg-white', 'rounded', 'p-3']
     }).closed.subscribe((res: Utilisateur | unknown) => {

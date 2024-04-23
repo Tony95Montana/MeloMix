@@ -16,11 +16,8 @@ export class ArtisteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.artiste);
     this.artisteService.getOne(this.artiste.id).subscribe(res => {
-      console.log(res);
       this.artiste.Musique = res.Musique;
-      console.log(this.artiste);
     });
   }
   closeClick(): void {

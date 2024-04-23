@@ -1,1 +1,10 @@
-<p>search works!</p>
+<div class="mx-auto pb-4 p-3 col-xl-8 col-12 border-main overflow-auto">
+    <div class="row col-12 mx-auto">
+        <div *ngFor="let musique of listResult" class="row mx-auto col-3 px-2 style mx-auto">
+            <span class="col-12 text-center fwt-bold click">{{musique.titre}}</span>
+            <img class="col-12 p-0 click" [src]="musique.pochette" alt="image de la pochette de la musique"/>
+            <button class="col-auto px-1 text-white z-index1">{{musique.Artiste.nom}}</button>
+            <span class="col text-end fst-italic click">{{musique.duree}}</span>
+        </div>
+    </div>
+</div>

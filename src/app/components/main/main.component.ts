@@ -33,7 +33,7 @@ export class MainComponent implements OnInit {
   }
   openArtiste(artiste: Artiste): void {
     this.dialog.open(ArtisteComponent, {
-      height: '80vh',
+      maxHeight: '80vh',
       width: '80vw',
       panelClass: ['bg-white', 'rounded', 'p-3'],
       data: { artiste: artiste }
@@ -41,7 +41,7 @@ export class MainComponent implements OnInit {
   }
   openStyle(style: Style): void {
     this.dialog.open(StyleComponent, {
-      height: '80vh',
+      maxHeight: '80vh',
       width: '80vw',
       panelClass: ['bg-white', 'rounded', 'p-3'],
       data: { style: style }
