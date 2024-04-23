@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren } from '@angular/core';
 import { Artiste } from 'src/app/model/Artiste';
 import { Musique } from 'src/app/model/Musique';
 import { Style } from 'src/app/model/Style';
@@ -8,6 +8,7 @@ import { StyleService } from 'src/app/service/style.service';
 import { ArtisteComponent } from '../artiste/artiste.component';
 import { StyleComponent } from '../style/style.component';
 import { Dialog } from '@angular/cdk/dialog';
+import { AddToPlaylistComponent } from '../forms/add-to-playlist/add-to-playlist.component';
 
 @Component({
   selector: 'app-main',
@@ -17,10 +18,18 @@ import { Dialog } from '@angular/cdk/dialog';
 export class MainComponent implements OnInit {
   listMusiques: Musique[] = [];
   listStyles: Style[] = [];
+  flagMenu = false;
+  flagBody = false;
+  @ViewChildren("miniMenu") miniMenu!: QueryList<ElementRef>;
 
-  constructor(private readonly dialog: Dialog, private readonly lectureService: LectureService, private readonly musiqueService: MusiqueService, private readonly styleService: StyleService) { }
+  constructor(private readonly renderer: Renderer2, private readonly dialog: Dialog, private readonly lectureService: LectureService, private readonly musiqueService: MusiqueService, private readonly styleService: StyleService) { }
 
   ngOnInit(): void {
+    const body = document.getElementsByClassName("body")[0];
+    this.renderer.listen(body, 'click', () => {
+      if (this.flagMenu && !this.flagBody) this.flagBody = true;
+      else if (this.flagMenu && this.flagBody) this.clearMenu();
+    });
     this.musiqueService.getAll().subscribe(res => {
       this.listMusiques = res;
     });
@@ -30,6 +39,14 @@ export class MainComponent implements OnInit {
   }
   lecture(musique: Musique): void {
     this.lectureService.updateNumero(musique.id.toString());
+  }
+  addPlaylist(musique: Musique): void {
+    this.dialog.open(AddToPlaylistComponent, {
+      maxHeight: '80vh',
+      width: '40vw',
+      panelClass: ['bg-white', 'rounded', 'p-3'],
+      data: { musique: musique }
+    });
   }
   openArtiste(artiste: Artiste): void {
     this.dialog.open(ArtisteComponent, {
@@ -46,6 +63,19 @@ export class MainComponent implements OnInit {
       panelClass: ['bg-white', 'rounded', 'p-3'],
       data: { style: style }
     });
+  }
+  clearMenu(): void {
+    this.miniMenu.forEach(element => {
+      element.nativeElement.style.display = "none";
+    });
+    this.flagMenu = false;
+    this.flagBody = false;
+  }
+  openMenu(index: number): void {
+    const menu = this.miniMenu.get(index)?.nativeElement;
+    if (this.flagMenu) menu.style.display = "none";
+    else menu.style.display = "block";
+    this.flagMenu = !this.flagMenu;
   }
   convert(secondes: number): string {
     let minute = 0;

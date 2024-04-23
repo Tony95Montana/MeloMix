@@ -1,8 +1,14 @@
 <div class="mx-auto pb-4 p-3 col-xl-8 col-12 border-main overflow-auto">
     <h3>Écouter récemment</h3>
     <div class="row col-12 mx-auto">
-        <div *ngFor="let musique of listMusiques" class="row mx-auto col-3 px-2 style mx-auto">
+        <div *ngFor="let musique of listMusiques; let i = index" class="row mx-auto col-3 px-2 style mx-auto">
             <span class="col-12 text-center fwt-bold click" (click)="lecture(musique)">{{musique.titre}}</span>
+            <div class="col-3 position-absolute px-4 text-end">
+                <button class="text-white z-index1" (click)="openMenu(i)"><mat-icon>more_horiz</mat-icon></button>
+                <div #miniMenu class="mini_menu" style="display: none;">
+                    <button class="btn btn-dark d-flex" (click)="addPlaylist(musique)"><mat-icon>playlist_add</mat-icon><span>Ajouter à une playlist</span></button>
+                </div>
+            </div>
             <img class="col-12 p-0 click" [src]="musique.pochette" (click)="lecture(musique)" alt="image de la pochette de la musique"/>
             <button class="col-auto px-1 text-white z-index1" (click)="openArtiste(musique.Artiste)">{{musique.Artiste.nom}}</button>
             <span class="col text-end fst-italic click" (click)="lecture(musique)">{{convert(musique.duree)}}</span>

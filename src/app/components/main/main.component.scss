@@ -9,7 +9,7 @@
     background-color: $black1;
     border-radius: 8px;
     color: snow;
-    :first-child {
+    span:first-child {
         text-transform: capitalize;
     }
 }

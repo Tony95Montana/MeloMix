@@ -21,6 +21,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { PlaylistComponent } from './components/playlist/playlist.component';
 import { ArtisteComponent } from './components/artiste/artiste.component';
 import { StyleComponent } from './components/style/style.component';
+import { AddToPlaylistComponent } from './components/forms/add-to-playlist/add-to-playlist.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { StyleComponent } from './components/style/style.component';
     ConnectionComponent,
     PlaylistComponent,
     ArtisteComponent,
-    StyleComponent
+    StyleComponent,
+    AddToPlaylistComponent
   ],
   imports: [
     FormsModule,
