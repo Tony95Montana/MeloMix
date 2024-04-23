@@ -48,7 +48,12 @@ export class HeaderComponent implements OnInit {
   }
   playlist(): void {
     if (this.flagPlaylist) this.menuplaylist.nativeElement.style.display = "none";
-    else this.menuplaylist.nativeElement.style.display = "block";
+    else {
+      this.menuplaylist.nativeElement.style.display = "block";
+      this.playService.getAllByUser(1).subscribe(res => {
+        this.playlists = res;
+      });
+    }
     this.flagPlaylist = !this.flagPlaylist;
   }
   createPlaylist(): void {
@@ -71,6 +76,10 @@ export class HeaderComponent implements OnInit {
       width: '80vw',
       panelClass: ['bg-white', 'rounded', 'p-3'],
       data: { playlist: playlist }
+    }).closed.subscribe(() => {
+      this.playService.getAllByUser(1).subscribe(res => {
+        this.playlists = res;
+      });
     });
   }
   connection(): void {

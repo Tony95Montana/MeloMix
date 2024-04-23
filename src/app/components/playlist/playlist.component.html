@@ -6,9 +6,17 @@
     </div>
     <p class="mx-auto w-25">{{playlist.description}}</p>
     <hr>
-    <div>
+    <div class="p-3">
         <h3 *ngIf="listMusique.length == 0">Aucune musique...</h3>
-        <div *ngFor="let musique of listMusique">
+        <div *ngFor="let musique of listMusique" class="row col-12 col-xl-8 mx-auto">
+            <div class="row col mx-auto align-items-center click p-0" (click)="lecture(musique)">
+                <img class="col-auto rounded-pill" [src]="musique.pochette" alt="image de la pochette">
+                <span class="col text-start p-0">{{musique.titre}}</span>
+                <span class="col-1">{{musique.annee}}</span>
+                <span class="col-1">{{convert(musique.duree)}}</span>
+            </div>
+            <button class="col-auto h-25 btn btn-outline-danger align-self-center" (click)="deleteToPlaylist(musique)"><mat-icon class="align-bottom">delete_outline</mat-icon></button>
+            <hr class="mt-1">
         </div>
     </div>
 </div>

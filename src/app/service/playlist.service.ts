@@ -20,11 +20,19 @@ export class PlaylistService {
   getAllByUser(id_utilisateur: number): Observable<Playlist[]> {
     return this.http.get<Playlist[]>(this.url, this.httpOptions);
   }
+  getOne(id: number): Observable<Playlist> {
+    return this.http.get<Playlist>(this.url + "/" + id, this.httpOptions);
+  }
   add(playlist: Playlist): Observable<Playlist> {
     return this.http.post<Playlist>(this.url, playlist, this.httpOptions);
   }
   addMusiqueTo(musique: Musique, playlist: Playlist): Observable<Playlist> {
     playlist.list_musique += musique.id + ",";
+    return this.http.post<Playlist>(this.url, playlist, this.httpOptions);
+  }
+  delMusiqueTo(musique: Musique, playlist: Playlist): Observable<Playlist> {
+    const newPlaylist = playlist.list_musique.replace(musique.id + ",", '');
+    playlist.list_musique = newPlaylist;
     return this.http.post<Playlist>(this.url, playlist, this.httpOptions);
   }
 }
