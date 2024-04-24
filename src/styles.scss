@@ -75,12 +75,16 @@ a {
 }
 .mini_menu {
     background-color: rgb(39, 39, 39);
-    position: relative;
+    position: absolute;
     width: fit-content;
     display: flex;
-    top: -32px;
+    top: -4px;
     right: -2px;
     width: max-content;
     padding: 4px;
     border-radius: 8px;
+    z-index: 1;
+}
+.fs-7 {
+    font-size: small;
 }

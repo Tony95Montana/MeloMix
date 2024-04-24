@@ -31,14 +31,18 @@ export class MusiqueService {
   getOne(id: number | string): Observable<Musique> {
     return this.http.get<Musique>(this.url + "/" + id, this.httpOptions);
   }
+  add(musique: any): Observable<Musique> {
+    return this.http.post<Musique>(this.url, musique, this.httpOptions);
+  }
+  // api Spotify
   searchOne(requette: string): Observable<any> {
-    return this.http.get("https://api.spotify.com/v1/search?type=track&q=" + requette, {
+    return this.http.get("https://api.spotify.com/v1/search?type=track&q=" + requette + "&market=FR", {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.access_token.access_token
       })
     });
   }
-  getAccessToken() {
+  getAccessToken(): Observable<any> {
     return this.http.post('https://accounts.spotify.com/api/token', 'grant_type=client_credentials', this.httpOptions2);
   }
 }

@@ -9,6 +9,7 @@ import { ArtisteComponent } from '../artiste/artiste.component';
 import { StyleComponent } from '../style/style.component';
 import { Dialog } from '@angular/cdk/dialog';
 import { AddToPlaylistComponent } from '../forms/add-to-playlist/add-to-playlist.component';
+import { ArtisteService } from 'src/app/service/artiste.service';
 
 @Component({
   selector: 'app-main',
@@ -22,9 +23,10 @@ export class MainComponent implements OnInit {
   flagBody = false;
   @ViewChildren("miniMenu") miniMenu!: QueryList<ElementRef>;
 
-  constructor(private readonly renderer: Renderer2, private readonly dialog: Dialog, private readonly lectureService: LectureService, private readonly musiqueService: MusiqueService, private readonly styleService: StyleService) { }
+  constructor(private readonly artisteService: ArtisteService, private readonly renderer: Renderer2, private readonly dialog: Dialog, private readonly lectureService: LectureService, private readonly musiqueService: MusiqueService, private readonly styleService: StyleService) { }
 
   ngOnInit(): void {
+    // this.remplir();
     const body = document.getElementsByClassName("body")[0];
     this.renderer.listen(body, 'click', () => {
       if (this.flagMenu && !this.flagBody) this.flagBody = true;
@@ -46,6 +48,55 @@ export class MainComponent implements OnInit {
       width: '40vw',
       panelClass: ['bg-white', 'rounded', 'p-3'],
       data: { musique: musique }
+    });
+  }
+  remplir() { // fonction temporaire pour remplir database
+    const list = ['gazo', 'sch', 'ninho', 'djadja dinaz'];
+    const listArtiste: Artiste[] = [];
+    this.musiqueService.getAccessToken().subscribe(tokken => {
+      this.musiqueService.access_token = tokken;
+      list.forEach(artiste => {
+        this.musiqueService.searchOne(artiste).subscribe(res => {
+          res.tracks.items.forEach((element: any) => {
+            const unArtiste = {
+              id: 0,
+              nom: element.artists[0].name,
+              image: element.album.images[0].url,
+              Musique: []
+            };
+            this.artisteService.add(unArtiste).subscribe(artisteF => {
+              listArtiste.push(artisteF);
+              const musique = {
+                id: 0,
+                titre: element.name,
+                pochette: element.album.images[0].url,
+                duree: Math.floor(element.duration_ms / 1000),
+                annee: parseInt(element.album.release_date.split('-')[0]),
+                Artiste: artisteF.id,
+                Style: 1,
+              };
+              this.musiqueService.add(musique).subscribe(res => {
+                console.log(res);
+              });
+            }, err => {
+              if (listArtiste.filter(x => x.nom == element?.artists[0]?.name)[0]?.id) {
+                const musique = {
+                  id: 0,
+                  titre: element.name,
+                  pochette: element.album.images[0].url,
+                  duree: Math.floor(element.duration_ms / 1000),
+                  annee: parseInt(element.album.release_date.split('-')[0]),
+                  Artiste: listArtiste.filter(x => x.nom == element.artists[0].name)[0].id,
+                  Style: 1,
+                };
+                this.musiqueService.add(musique).subscribe(res => {
+                  console.log(res);
+                });
+              }
+            });
+          });
+        });
+      });
     });
   }
   openArtiste(artiste: Artiste): void {
@@ -83,12 +134,12 @@ export class MainComponent implements OnInit {
     let heure = 0;
     let res = "";
     if (secondes >= 3600) {
-      heure = secondes/60/60;
-      minute = secondes/60;
-      seconde = secondes%60;
+      heure = Math.floor(secondes / 60 / 60);
+      minute = Math.floor(secondes / 60);
+      seconde = secondes % 60;
     } else {
-      minute = secondes/60;
-      seconde = secondes%60;
+      minute = Math.floor(secondes / 60);
+      seconde = secondes % 60;
     }
     if (heure != 0) res += heure + ":";
     res += (minute.toString().length == 1) ? "0" + minute + ":" : minute + ":";

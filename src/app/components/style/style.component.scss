@@ -4,3 +4,6 @@ h1 {
 img.col-auto {
     max-height: 100px;
 }
+div.overflow-auto {
+    max-height: calc(60vh - 200px);
+}

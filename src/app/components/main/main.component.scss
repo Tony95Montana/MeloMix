@@ -12,9 +12,20 @@
     span:first-child {
         text-transform: capitalize;
     }
+    align-content: flex-start;
+}
+div.position-relative {
+    top: -20px;
 }
 img {
     max-height: 200px;
     border-radius: 10px;
     width: auto;
+}
+img.pochette {
+    position: relative;
+    top: -20px;
+}
+button {
+    min-width: 40px;
 }

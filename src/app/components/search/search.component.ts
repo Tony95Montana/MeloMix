@@ -28,7 +28,7 @@ export class SearchComponent implements OnInit {
                 id: 0,
                 titre: element.name,
                 pochette: element.album.images[0].url,
-                duree: element.duration_ms,
+                duree: Math.floor(element.duration_ms/1000),
                 annee: parseInt(element.album.release_date.split('-')[0]),
                 Artiste: { id: 0, nom: element.artists[0].name, Musique: [], image: '' },
                 Style: { id: 0, nom: "", Musique: [], image: "" }
@@ -38,5 +38,24 @@ export class SearchComponent implements OnInit {
         });
       } else this.rooter.navigateByUrl('');
     });
+  }
+  open(musique: Musique): void { }
+  convert(secondes: number): string {
+    let minute = 0;
+    let seconde = 0;
+    let heure = 0;
+    let res = "";
+    if (secondes >= 3600) {
+      heure = Math.floor(secondes/60/60);
+      minute = Math.floor(secondes/60);
+      seconde = secondes%60;
+    } else {
+      minute = Math.floor(secondes/60);
+      seconde = secondes%60;
+    }
+    if (heure != 0) res += heure + ":";
+    res += (minute.toString().length == 1) ? "0" + minute + ":" : minute + ":";
+    res += (seconde.toString().length == 1) ? "0" + seconde : seconde;
+    return res;
   }
 }
