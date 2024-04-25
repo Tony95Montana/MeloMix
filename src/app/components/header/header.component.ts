@@ -15,7 +15,7 @@ import { UtilisateurService } from 'src/app/service/utilisateur.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   navBar = "";
   flagMenu = false;
   flagMenu2 = false;
@@ -37,11 +37,6 @@ export class HeaderComponent implements OnInit {
 
   constructor(private readonly utilisateurService: UtilisateurService, private readonly router: Router, private readonly dialog: Dialog, private readonly playService: PlaylistService) { }
 
-  ngOnInit(): void {
-    this.playService.getAllByUser(1).subscribe(res => {
-      this.playlists = res;
-    });
-  }
   onEnter(): void {
     if (this.navBar != "") this.router.navigateByUrl('/recherche', { state: { query: this.navBar } });
   }
@@ -59,11 +54,16 @@ export class HeaderComponent implements OnInit {
     if (this.flagPlaylist) this.menuplaylist.nativeElement.style.display = "none";
     else {
       this.menuplaylist.nativeElement.style.display = "block";
-      this.playService.getAllByUser(1).subscribe(res => {
+      this.refreshPlaylist();
+    }
+    this.flagPlaylist = !this.flagPlaylist;
+  }
+  refreshPlaylist(): void {
+    if (this.currentUser?.id != 0) {
+      this.playService.getAllByUser(this.currentUser.id).subscribe(res => {
         this.playlists = res;
       });
     }
-    this.flagPlaylist = !this.flagPlaylist;
   }
   createPlaylist(): void {
     this.dialog.open(AddPlaylistComponent, {
@@ -86,9 +86,7 @@ export class HeaderComponent implements OnInit {
       panelClass: ['bg-white', 'rounded', 'p-3'],
       data: { playlist: playlist }
     }).closed.subscribe(() => {
-      this.playService.getAllByUser(1).subscribe(res => {
-        this.playlists = res;
-      });
+      this.refreshPlaylist();
     });
   }
   connection(): void {

@@ -19,6 +19,9 @@ export class ArtisteService {
   getOne(id: number): Observable<Artiste> {
     return this.http.get<Artiste>(this.url + "/" + id, this.httpOptions);
   }
+  getOneByName(nom: string): Observable<Artiste> {
+    return this.http.get<Artiste>(this.url + "/nom/" + nom, this.httpOptions);
+  }
   add(artiste: Artiste): Observable<Artiste> {
     return this.http.post<Artiste>(this.url, artiste, this.httpOptions);
   }

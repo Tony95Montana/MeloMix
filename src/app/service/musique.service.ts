@@ -31,6 +31,9 @@ export class MusiqueService {
   getOne(id: number | string): Observable<Musique> {
     return this.http.get<Musique>(this.url + "/" + id, this.httpOptions);
   }
+  getOneByName(titre: string): Observable<Musique> {
+    return this.http.get<Musique>(this.url + "/titre/" + titre, this.httpOptions);
+  }
   add(musique: any): Observable<Musique> {
     return this.http.post<Musique>(this.url, musique, this.httpOptions);
   }

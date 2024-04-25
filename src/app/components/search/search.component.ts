@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
+import { Artiste } from 'src/app/model/Artiste';
 import { Musique } from 'src/app/model/Musique';
+import { ArtisteService } from 'src/app/service/artiste.service';
+import { LectureService } from 'src/app/service/lecture.service';
 import { MusiqueService } from 'src/app/service/musique.service';
 
 @Component({
@@ -13,7 +16,7 @@ export class SearchComponent implements OnInit {
   listResult: Musique[] = [];
   state$!: Observable<object>;
 
-  constructor(private readonly rooter: Router, private readonly activatedRoute: ActivatedRoute, private readonly musiqueService: MusiqueService) { }
+  constructor(private readonly artisteService: ArtisteService, private readonly lectureService: LectureService, private readonly rooter: Router, private readonly activatedRoute: ActivatedRoute, private readonly musiqueService: MusiqueService) { }
 
   ngOnInit(): void {
     this.state$ = this.activatedRoute.paramMap.pipe(map(() => window.history.state));
@@ -31,7 +34,7 @@ export class SearchComponent implements OnInit {
                 duree: Math.floor(element.duration_ms/1000),
                 annee: parseInt(element.album.release_date.split('-')[0]),
                 Artiste: { id: 0, nom: element.artists[0].name, Musique: [], image: '' },
-                Style: { id: 0, nom: "", Musique: [], image: "" }
+                Style: { id: 1, nom: "", Musique: [], image: "" }
               });
             });
           });
@@ -39,7 +42,47 @@ export class SearchComponent implements OnInit {
       } else this.rooter.navigateByUrl('');
     });
   }
-  open(musique: Musique): void { }
+  open(musique: Musique): void {
+    this.musiqueService.getOneByName(musique.titre).subscribe(res => {
+      if (res?.titre === musique.titre) this.lectureService.updateNumero(musique.id.toString());
+      else {
+        this.artisteService.getOneByName(musique.Artiste.nom).subscribe(result => {
+          const res = {
+            id: musique.id,
+            titre: musique.titre,
+            pochette: musique.pochette,
+            annee: musique.annee,
+            duree: musique.duree,
+            Style: musique.Style.id,
+            Artiste: result.id
+          }
+          console.log(res);
+          this.musiqueService.add(res).subscribe(() => {});
+          this.lectureService.updateNumero(musique.id.toString());
+        }, () => {
+          const artiste: Artiste = {
+            id: 0,
+            nom: musique.Artiste.nom,
+            image: musique.Artiste.image,
+            Musique: []
+          };
+          this.artisteService.add(artiste).subscribe(result => {
+            const res = {
+              id: musique.id,
+              titre: musique.titre,
+              pochette: musique.pochette,
+              annee: musique.annee,
+              duree: musique.duree,
+              Style: musique.Style.id,
+              Artiste: result.id
+            }
+            this.musiqueService.add(res).subscribe(() => {});
+            this.lectureService.updateNumero(musique.id.toString());
+          });
+        });
+      }
+    });
+  }
   convert(secondes: number): string {
     let minute = 0;
     let seconde = 0;
