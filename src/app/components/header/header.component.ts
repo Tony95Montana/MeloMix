@@ -8,6 +8,7 @@ import { PlaylistService } from 'src/app/service/playlist.service';
 import { PlaylistComponent } from '../playlist/playlist.component';
 import { Utilisateur } from 'src/app/model/Utilisateur';
 import { Router } from '@angular/router';
+import { UtilisateurService } from 'src/app/service/utilisateur.service';
 
 @Component({
   selector: 'app-header',
@@ -16,17 +17,25 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   navBar = "";
-  currentUser!: Utilisateur;
   flagMenu = false;
   flagMenu2 = false;
   flagPlaylist = false;
   flagConnecter = false;
   playlists: Playlist[] = [];
+  currentUser: Utilisateur = {
+    id: 0,
+    email: "",
+    nom: "",
+    prenom: "",
+    image: "",
+    mdp: "",
+    telephone: ""
+  };
   @ViewChild("thisMenu") thisMenu!: ElementRef;
   @ViewChild("thisMenu2") thisMenu2!: ElementRef;
   @ViewChild("menuplaylist") menuplaylist!: ElementRef;
 
-  constructor(private readonly router: Router, private readonly dialog: Dialog, private readonly playService: PlaylistService) { }
+  constructor(private readonly utilisateurService: UtilisateurService, private readonly router: Router, private readonly dialog: Dialog, private readonly playService: PlaylistService) { }
 
   ngOnInit(): void {
     this.playService.getAllByUser(1).subscribe(res => {
@@ -87,7 +96,26 @@ export class HeaderComponent implements OnInit {
       maxHeight: '80vh',
       width: '40vw',
       panelClass: ['bg-white', 'rounded', 'p-3']
+    }).closed.subscribe((res: any) => {
+      if (res?.id != 0) {
+        this.utilisateurService.getOne(res.id).subscribe(res => {
+          this.currentUser = res;
+        });
+        this.flagConnecter = true;
+      }
     });
+  }
+  deconnection(): void {
+    this.flagConnecter = false;
+    this.currentUser = {
+      id: 0,
+      email: "",
+      nom: "",
+      prenom: "",
+      image: "",
+      mdp: "",
+      telephone: ""
+    };
   }
   inscription(): void {
     this.menu2();

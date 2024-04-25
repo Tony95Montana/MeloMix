@@ -2,9 +2,9 @@
     <h1 class="text-center">Connection</h1>
     <button class="close" (click)="closeClick()"><mat-icon>close</mat-icon></button>
     <span>Mail</span>
-    <input type="text" [(ngModel)]="mail" class="form-control mx-4 col">
+    <input type="text" [(ngModel)]="mail" class="form-control mx-4 col" (keyup.enter)="connect()">
     <span>Mot de passe</span>
-    <input type="text" [(ngModel)]="mdp" class="form-control mx-4 col">
+    <input type="text" [(ngModel)]="mdp" class="form-control mx-4 col" (keyup.enter)="connect()">
     <div class="row col-12 mt-3 mx-auto">
         <button class="col-4 btn mx-auto btn-outline-danger" (click)="closeClick()">Annuler</button>
         <button class="col-4 btn mx-auto btn-info text-white" (click)="connect()">Connection</button>

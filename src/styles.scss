@@ -73,6 +73,9 @@ a {
     background-clip: padding-box;
     border: 4px solid transparent;
 }
+.capitalise {
+    text-transform: capitalize;
+}
 .mini_menu {
     background-color: rgb(39, 39, 39);
     position: absolute;

@@ -12,22 +12,26 @@ export class UtilisateurService {
   httpOptions = {
     headers: new HttpHeaders({
       'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
     }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   addUtilisateur(utilisateur: Utilisateur): Observable<Utilisateur> {
     return this.http.post<any>(this.url, utilisateur, this.httpOptions);
   }
-  connection(username: string, password: string): Observable<any> {
-    console.log(username, password);
-
-    return this.http.post<any>(this.url2 + 'login', {
-      username: username,
-      password: password
-      ,
+  getOne(id: number): Observable<Utilisateur> {
+    return this.http.get<Utilisateur>(this.url + "/" + id, this.httpOptions);
+  }
+  getTokken(email: string, password: string): Observable<{ access_token: string }> {
+    return this.http.post<{ access_token: string }>(this.url2 + 'login', { username: email, password: password }, this.httpOptions);
+  }
+  connection(tokken: { access_token: string }): Observable<Utilisateur> {
+    return this.http.get<any>(this.url2 + 'profile', {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': 'Bearer ' + tokken.access_token
+      }),
     });
   }
 }

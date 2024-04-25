@@ -25,12 +25,15 @@
         <input type="text" class="form-control" [(ngModel)]="navBar" (keyup.enter)="onEnter()">
     </div>
     <button class="button_user" (click)="menu2()">
-        <img *ngIf="flagConnecter && currentUser.image != ''" [src]="currentUser.image" alt="photo de profil de l'utilisateur">
+        <img *ngIf="flagConnecter && currentUser.image != ''" [src]="currentUser.image" class="menu_ico2 rounded-circle" alt="photo de profil de l'utilisateur">
         <mat-icon *ngIf="!flagConnecter || currentUser.image == ''" class="menu_ico2">account_circle</mat-icon>
     </button>
     <div #thisMenu2 class="menu2 px-3 row mx-auto align-content-start" style="display: none">
+        <div *ngIf="flagConnecter" class="col-12 mx-auto row p-0 mb-2 text-white capitalise">
+            <span class="col-6">{{currentUser.prenom}}</span><span class="col-6">{{currentUser.nom}}</span>
+        </div>
         <button class="text-white btn btn-outline-info my-2" *ngIf="!flagConnecter" (click)="inscription()">Inscription</button>
         <button class="text-white btn btn-info my-2" *ngIf="!flagConnecter" (click)="connection()">Connection</button>
-        <button class="text-white btn btn-outline-info" *ngIf="flagConnecter">Déconnection</button>
+        <button class="text-white btn btn-outline-info mb-1" *ngIf="flagConnecter" (click)="deconnection()">Déconnection</button>
     </div>
 </div>
