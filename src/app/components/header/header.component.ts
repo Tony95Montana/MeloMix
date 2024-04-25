@@ -15,7 +15,7 @@ import { UtilisateurService } from 'src/app/service/utilisateur.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   navBar = "";
   flagMenu = false;
   flagMenu2 = false;
@@ -36,6 +36,16 @@ export class HeaderComponent {
   @ViewChild("menuplaylist") menuplaylist!: ElementRef;
 
   constructor(private readonly utilisateurService: UtilisateurService, private readonly router: Router, private readonly dialog: Dialog, private readonly playService: PlaylistService) { }
+
+  ngOnInit(): void {
+    const id = sessionStorage.getItem('id');
+    if (id) {
+      this.utilisateurService.getOne(parseInt(id)).subscribe(res => {
+        this.currentUser = res;
+      });
+      this.flagConnecter = true;
+    }
+  }
 
   onEnter(): void {
     if (this.navBar != "") this.router.navigateByUrl('/recherche', { state: { query: this.navBar } });
@@ -105,6 +115,7 @@ export class HeaderComponent {
   }
   deconnection(): void {
     this.flagConnecter = false;
+    sessionStorage.clear();
     this.currentUser = {
       id: 0,
       email: "",

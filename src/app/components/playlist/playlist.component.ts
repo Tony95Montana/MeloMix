@@ -49,12 +49,12 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     let heure = 0;
     let res = "";
     if (secondes >= 3600) {
-      heure = secondes/60/60;
-      minute = secondes/60;
-      seconde = secondes%60;
+      heure = Math.floor(secondes / 60 / 60);
+      minute = Math.floor(secondes / 60);
+      seconde = secondes % 60;
     } else {
-      minute = secondes/60;
-      seconde = secondes%60;
+      minute = Math.floor(secondes / 60);
+      seconde = secondes % 60;
     }
     if (heure != 0) res += heure + ":";
     res += (minute.toString().length == 1) ? "0" + minute + ":" : minute + ":";
