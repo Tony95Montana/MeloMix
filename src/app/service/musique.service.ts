@@ -8,8 +8,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class MusiqueService {
   url = "http://localhost:3000/musique";
-  client_id = '528e431b3189478aa8c52c1e0835d4cb';
-  client_secret = '04520eb069d8431a8ede05f9e4c2b231';
+  client_id = '016076a9328c490e871b53e3c60f8df0';
+  client_secret = '281c69495d784945acd547af7da8c6cb';
   access_token: any;
   httpOptions = {
     headers: new HttpHeaders({
