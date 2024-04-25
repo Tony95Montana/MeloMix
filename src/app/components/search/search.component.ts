@@ -51,25 +51,7 @@ export class SearchComponent implements OnInit {
         });
       } else {
         this.artisteService.getOneByName(musique.Artiste.nom).subscribe(result => {
-          const res = {
-            id: musique.id,
-            titre: musique.titre,
-            pochette: musique.pochette,
-            annee: musique.annee,
-            duree: musique.duree,
-            Style: musique.Style.id,
-            Artiste: result.id
-          }
-          this.musiqueService.add(res).subscribe(() => {});
-          this.lectureService.updateNumero(musique.id.toString());
-        }, () => {
-          const artiste: Artiste = {
-            id: 0,
-            nom: musique.Artiste.nom,
-            image: musique.Artiste.image,
-            Musique: []
-          };
-          this.artisteService.add(artiste).subscribe(result => {
+          if (result != null) {
             const res = {
               id: musique.id,
               titre: musique.titre,
@@ -81,7 +63,27 @@ export class SearchComponent implements OnInit {
             }
             this.musiqueService.add(res).subscribe(() => {});
             this.lectureService.updateNumero(musique.id.toString());
-          });
+          } else {
+            const artiste: Artiste = {
+              id: 0,
+              nom: musique.Artiste.nom,
+              image: musique.Artiste.image,
+              Musique: []
+            };
+            this.artisteService.add(artiste).subscribe(result => {
+              const res = {
+                id: musique.id,
+                titre: musique.titre,
+                pochette: musique.pochette,
+                annee: musique.annee,
+                duree: musique.duree,
+                Style: musique.Style.id,
+                Artiste: result.id
+              }
+              this.musiqueService.add(res).subscribe(() => {});
+              this.lectureService.updateNumero(musique.id.toString());
+            });
+          }
         });
       }
     });
