@@ -44,8 +44,12 @@ export class SearchComponent implements OnInit {
   }
   open(musique: Musique): void {
     this.musiqueService.getOneByName(musique.titre).subscribe(res => {
-      if (res?.titre === musique.titre) this.lectureService.updateNumero(musique.id.toString());
-      else {
+      if (res?.titre === musique.titre) {
+        this.musiqueService.getOneByName(musique.titre).subscribe(res => {
+          musique = res;
+          this.lectureService.updateNumero(musique.id.toString());
+        });
+      } else {
         this.artisteService.getOneByName(musique.Artiste.nom).subscribe(result => {
           const res = {
             id: musique.id,
