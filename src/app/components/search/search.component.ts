@@ -56,7 +56,6 @@ export class SearchComponent implements OnInit {
             Style: musique.Style.id,
             Artiste: result.id
           }
-          console.log(res);
           this.musiqueService.add(res).subscribe(() => {});
           this.lectureService.updateNumero(musique.id.toString());
         }, () => {
