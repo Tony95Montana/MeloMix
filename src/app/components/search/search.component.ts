@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { Artiste } from 'src/app/model/Artiste';
@@ -6,6 +6,8 @@ import { Musique } from 'src/app/model/Musique';
 import { ArtisteService } from 'src/app/service/artiste.service';
 import { LectureService } from 'src/app/service/lecture.service';
 import { MusiqueService } from 'src/app/service/musique.service';
+import { AddToPlaylistComponent } from '../forms/add-to-playlist/add-to-playlist.component';
+import { Dialog } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-search',
@@ -15,8 +17,10 @@ import { MusiqueService } from 'src/app/service/musique.service';
 export class SearchComponent implements OnInit {
   listResult: Musique[] = [];
   state$!: Observable<object>;
+  flagMenu = false;
+  @ViewChildren("miniMenu") miniMenu!: QueryList<ElementRef>;
 
-  constructor(private readonly artisteService: ArtisteService, private readonly lectureService: LectureService, private readonly rooter: Router, private readonly activatedRoute: ActivatedRoute, private readonly musiqueService: MusiqueService) { }
+  constructor(private readonly dialog: Dialog, private readonly artisteService: ArtisteService, private readonly lectureService: LectureService, private readonly rooter: Router, private readonly activatedRoute: ActivatedRoute, private readonly musiqueService: MusiqueService) { }
 
   ngOnInit(): void {
     this.state$ = this.activatedRoute.paramMap.pipe(map(() => window.history.state));
@@ -42,12 +46,29 @@ export class SearchComponent implements OnInit {
       } else this.rooter.navigateByUrl('');
     });
   }
-  open(musique: Musique): void {
+  addPlaylist(musique: Musique, i: number): void {
+    this.open(musique, true);
+    this.dialog.open(AddToPlaylistComponent, {
+      maxHeight: '80vh',
+      width: '40vw',
+      panelClass: ['bg-white', 'rounded', 'p-3'],
+      data: { musique: musique }
+    }).closed.subscribe(() => {
+      this.openMenu(i);
+    });
+  }
+  openMenu(index: number): void {
+    const menu = this.miniMenu.get(index)?.nativeElement;
+    if (this.flagMenu) menu.style.display = "none";
+    else menu.style.display = "block";
+    this.flagMenu = !this.flagMenu;
+  }
+  open(musique: Musique, lecture?: boolean): void {
     this.musiqueService.getOneByName(musique.titre).subscribe(res => {
       if (res?.titre === musique.titre) {
         this.musiqueService.getOneByName(musique.titre).subscribe(res => {
           musique = res;
-          this.lectureService.updateNumero(musique.id.toString());
+          if (!lecture) this.lectureService.updateNumero(musique.id.toString());
         });
       } else {
         this.artisteService.getOneByName(musique.Artiste.nom).subscribe(result => {
@@ -62,7 +83,7 @@ export class SearchComponent implements OnInit {
               Artiste: result.id
             }
             this.musiqueService.add(res).subscribe(() => {});
-            this.lectureService.updateNumero(musique.id.toString());
+            if (!lecture) this.lectureService.updateNumero(musique.id.toString());
           } else {
             const artiste: Artiste = {
               id: 0,
@@ -81,7 +102,7 @@ export class SearchComponent implements OnInit {
                 Artiste: result.id
               }
               this.musiqueService.add(res).subscribe(() => {});
-              this.lectureService.updateNumero(musique.id.toString());
+              if (!lecture) this.lectureService.updateNumero(musique.id.toString());
             });
           }
         });

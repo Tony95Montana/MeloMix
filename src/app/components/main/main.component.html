@@ -6,7 +6,7 @@
             <div class="col-12 p-0 position-relative text-end">
                 <button class="text-white z-index1" (click)="openMenu(i)"><mat-icon>more_horiz</mat-icon></button>
                 <div #miniMenu class="mini_menu" style="display: none;">
-                    <button class="btn btn-dark d-flex" (click)="addPlaylist(musique)"><mat-icon>playlist_add</mat-icon><span>Ajouter à une playlist</span></button>
+                    <button class="btn btn-dark d-flex" (click)="addPlaylist(musique, i)"><mat-icon>playlist_add</mat-icon><span>Ajouter à une playlist</span></button>
                 </div>
             </div>
             <img class="col-12 p-0 click pochette mx-auto" [src]="musique.pochette" (click)="lecture(musique)" alt="image de la pochette de la musique"/>

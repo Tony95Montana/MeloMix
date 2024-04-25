@@ -44,7 +44,10 @@ export class InscriptionComponent implements OnInit {
           image: image
         }
         this.utilisateurService.addUtilisateur(utilisateur).subscribe(res => {
-          if (res) this.closeClick(utilisateur);
+          if (res) {
+            sessionStorage.setItem('id', res.id.toString());
+            this.closeClick(res);
+          }
           else this.toast.error("Impossible de créer l'utilisateur", "Error Inscription");
         });
       });
@@ -59,7 +62,10 @@ export class InscriptionComponent implements OnInit {
         image: image
       }
       this.utilisateurService.addUtilisateur(utilisateur).subscribe(res => {
-        if (res) this.closeClick(utilisateur);
+        if (res) {
+          sessionStorage.setItem('id', res.id.toString());
+          this.closeClick(res);
+        }
         else this.toast.error("Impossible de créer l'utilisateur", "Error Inscription");
       });
     }

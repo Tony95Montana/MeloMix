@@ -42,12 +42,14 @@ export class MainComponent implements OnInit {
   lecture(musique: Musique): void {
     this.lectureService.updateNumero(musique.id.toString());
   }
-  addPlaylist(musique: Musique): void {
+  addPlaylist(musique: Musique, i: number): void {
     this.dialog.open(AddToPlaylistComponent, {
       maxHeight: '80vh',
       width: '40vw',
       panelClass: ['bg-white', 'rounded', 'p-3'],
       data: { musique: musique }
+    }).closed.subscribe(() => {
+      this.openMenu(i);
     });
   }
   remplir() { // fonction temporaire pour remplir database

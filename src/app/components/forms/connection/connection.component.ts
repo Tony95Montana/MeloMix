@@ -34,6 +34,7 @@ export class ConnectionComponent implements OnInit {
         this.token = res;
         this.utilisateurService.connection(this.token).subscribe(res => {
           this.user = res;
+          sessionStorage.setItem('id', this.user.id.toString());
           this.closeClick(this.user);
         });
       }, () =>{

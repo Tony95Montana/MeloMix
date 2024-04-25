@@ -76,6 +76,16 @@ a {
 .capitalise {
     text-transform: capitalize;
 }
+.style {
+    border: 2px solid snow;
+    background-color: $black1;
+    border-radius: 8px;
+    color: snow;
+    span:first-child {
+        text-transform: capitalize;
+    }
+    align-content: flex-start;
+}
 .mini_menu {
     background-color: rgb(39, 39, 39);
     position: absolute;

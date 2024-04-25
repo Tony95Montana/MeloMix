@@ -19,9 +19,15 @@ export class AddToPlaylistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.playlistService.getAllByUser(1).subscribe(res => {
-      this.playlists = res;
-    });
+    const id = sessionStorage.getItem('id');
+    if (id) {
+      this.playlistService.getAllByUser(1).subscribe(res => {
+        this.playlists = res;
+      });
+    } else {
+      this.toast.error("Veuillez vous connecter avant de remplir un playlist", "Impossible de remplir une playlist");
+      this.closeClick();
+    }
   }
   addToPlaylist(playlist: Playlist) {
     let flag = false;
