@@ -7,6 +7,7 @@ export interface Musique {
     duree: number;
     annee: number;
     pochette: string;
+    data?: string;
     Style: Style;
     Artiste: Artiste;
 }

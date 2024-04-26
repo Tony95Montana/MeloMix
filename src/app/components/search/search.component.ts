@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit {
       if(state) {
         this.musiqueService.getAccessToken().subscribe(tokken => {
           this.musiqueService.access_token = tokken;
-          this.musiqueService.searchOne("gomorra").subscribe(res => {
+          this.musiqueService.searchOne(state).subscribe(res => {
             res.tracks.items.forEach((element: any) => {
               this.listResult.push({
                 id: 0,
@@ -37,6 +37,7 @@ export class SearchComponent implements OnInit {
                 pochette: element.album.images[0].url,
                 duree: Math.floor(element.duration_ms/1000),
                 annee: parseInt(element.album.release_date.split('-')[0]),
+                data: element.preview_url,
                 Artiste: { id: 0, nom: element.artists[0].name, Musique: [], image: '' },
                 Style: { id: 1, nom: "", Musique: [], image: "" }
               });

@@ -53,7 +53,7 @@ export class MainComponent implements OnInit {
     });
   }
   remplir() { // fonction temporaire pour remplir database
-    const list = ['gazo', 'sch', 'ninho', 'djadja dinaz'];
+    const list = ['gazo', 'sch', 'ninho', 'djadja dinaz', 'jul', 'koba', 'koba lad', 'zola', '1pliké140', 'werenoi'];
     const listArtiste: Artiste[] = [];
     this.musiqueService.getAccessToken().subscribe(tokken => {
       this.musiqueService.access_token = tokken;
@@ -74,13 +74,16 @@ export class MainComponent implements OnInit {
                 pochette: element.album.images[0].url,
                 duree: Math.floor(element.duration_ms / 1000),
                 annee: parseInt(element.album.release_date.split('-')[0]),
+                data: element.preview_url,
                 Artiste: artisteF.id,
                 Style: 1,
               };
-              this.musiqueService.add(musique).subscribe(res => {
-                console.log(res);
-              });
-            }, err => {
+              if (element.preview_url) {
+                this.musiqueService.add(musique).subscribe(res => {
+                  console.log(res);
+                });
+              }
+            }, () => {
               if (listArtiste.filter(x => x.nom == element?.artists[0]?.name)[0]?.id) {
                 const musique = {
                   id: 0,
@@ -88,12 +91,15 @@ export class MainComponent implements OnInit {
                   pochette: element.album.images[0].url,
                   duree: Math.floor(element.duration_ms / 1000),
                   annee: parseInt(element.album.release_date.split('-')[0]),
+                  data: element.preview_url,
                   Artiste: listArtiste.filter(x => x.nom == element.artists[0].name)[0].id,
                   Style: 1,
                 };
-                this.musiqueService.add(musique).subscribe(res => {
-                  console.log(res);
-                });
+                if (element.preview_url) {
+                  this.musiqueService.add(musique).subscribe(res => {
+                    console.log(res);
+                  });
+                }
               }
             });
           });
