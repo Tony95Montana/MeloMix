@@ -15,10 +15,10 @@
         </div>
     </div>
     <h3>Styles</h3>
-    <div class="row col-12 mx-auto">
-        <div *ngFor="let style of listStyles" class="col-3 text-center style mx-2 click" (click)="openStyle(style)">
-            <span class="fst-italic">{{style.nom}}</span>
-            <img [src]="style.image" alt="image du style de musique"/>
+    <div class="d-flex col-12 mx-auto">
+        <div *ngFor="let style of listStyles" class="row mx-auto col-3 text-center style click" (click)="openStyle(style)">
+            <span class="fst-italic col-12">{{style.nom}}</span>
+            <img [src]="style.image" class="mx-auto p-0" alt="image du style de musique"/>
         </div>
     </div>
 </div>
