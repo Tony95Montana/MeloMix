@@ -45,6 +45,13 @@ export class MusiqueService {
       })
     });
   }
+  getStyle(requette: string): Observable<any> {
+    return this.http.get("https://api.spotify.com/v1/recommendations?seed_genres=" + requette + "&market=FR", {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.access_token.access_token
+      })
+    });
+  }
   getAccessToken(): Observable<any> {
     return this.http.post('https://accounts.spotify.com/api/token', 'grant_type=client_credentials', this.httpOptions2);
   }

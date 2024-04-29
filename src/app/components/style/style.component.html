@@ -5,8 +5,8 @@
         <img [src]="style.image" class="item_image" alt="photo de la pochette">
     </div>
     <div class="col-xl-8 col-12 mx-auto overflow-auto">
-        <div *ngFor="let musique of style.Musique">
-            <div class="row col-12 mx-auto align-items-center click" (click)="lecture(musique)">
+        <div *ngFor="let musique of listMusique">
+            <div class="row col-12 mx-auto align-items-center click" (click)="open(musique)">
                 <img class="col-auto rounded-pill" [src]="musique.pochette" alt="image de la pochette">
                 <span class="col text-start p-0">{{musique.titre}}</span>
                 <span class="col-1">{{musique.annee}}</span>
