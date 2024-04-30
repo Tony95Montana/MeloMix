@@ -15,6 +15,7 @@ import { Dialog } from '@angular/cdk/dialog';
   styleUrl: './search.component.scss'
 })
 export class SearchComponent implements OnInit {
+  numero$ = this.musiqueService.query
   listResult: Musique[] = [];
   state$!: Observable<object>;
   flagMenu = false;
@@ -26,25 +27,11 @@ export class SearchComponent implements OnInit {
     this.state$ = this.activatedRoute.paramMap.pipe(map(() => window.history.state));
     this.state$.subscribe(($state: any) => {
       const state = $state.query;
-      if(state) {
-        this.musiqueService.getAccessToken().subscribe(tokken => {
-          this.musiqueService.access_token = tokken;
-          this.musiqueService.searchOne(state).subscribe(res => {
-            res.tracks.items.forEach((element: any) => {
-              this.listResult.push({
-                id: 0,
-                titre: element.name,
-                pochette: element.album.images[0].url,
-                duree: Math.floor(element.duration_ms/1000),
-                annee: parseInt(element.album.release_date.split('-')[0]),
-                data: element.preview_url,
-                Artiste: { id: 0, nom: element.artists[0].name, Musique: [], image: '' },
-                Style: { id: 1, nom: "", Musique: [], image: "" }
-              });
-            });
-          });
-        });
-      } else this.rooter.navigateByUrl('');
+      if (state) this.call(state);
+      else this.rooter.navigateByUrl("");
+    });
+    this.numero$.subscribe(query => {
+      if (query != "") this.call(query);
     });
   }
   addPlaylist(musique: Musique, i: number): void {
@@ -56,6 +43,26 @@ export class SearchComponent implements OnInit {
       data: { musique: musique }
     }).closed.subscribe(() => {
       this.openMenu(i);
+    });
+  }
+  call(state: string): void {
+    this.listResult = [];
+    this.musiqueService.getAccessToken().subscribe(tokken => {
+      this.musiqueService.access_token = tokken;
+      this.musiqueService.searchOne(state).subscribe(res => {
+        res.tracks.items.forEach((element: any) => {
+          this.listResult.push({
+            id: 0,
+            titre: element.name,
+            pochette: element.album.images[0].url,
+            duree: Math.floor(element.duration_ms / 1000),
+            annee: parseInt(element.album.release_date.split('-')[0]),
+            data: element.preview_url,
+            Artiste: { id: 0, nom: element.artists[0].name, Musique: [], image: '' },
+            Style: { id: 1, nom: "", Musique: [], image: "" }
+          });
+        });
+      });
     });
   }
   openMenu(index: number): void {
@@ -83,7 +90,7 @@ export class SearchComponent implements OnInit {
               Style: musique.Style.id,
               Artiste: result.id
             }
-            this.musiqueService.add(res).subscribe(() => {});
+            this.musiqueService.add(res).subscribe(() => { });
             if (!lecture) this.lectureService.updateNumero(musique.id.toString());
           } else {
             const artiste: Artiste = {
@@ -102,7 +109,7 @@ export class SearchComponent implements OnInit {
                 Style: musique.Style.id,
                 Artiste: result.id
               }
-              this.musiqueService.add(res).subscribe(() => {});
+              this.musiqueService.add(res).subscribe(() => { });
               if (!lecture) this.lectureService.updateNumero(musique.id.toString());
             });
           }
@@ -116,12 +123,12 @@ export class SearchComponent implements OnInit {
     let heure = 0;
     let res = "";
     if (secondes >= 3600) {
-      heure = Math.floor(secondes/60/60);
-      minute = Math.floor(secondes/60);
-      seconde = secondes%60;
+      heure = Math.floor(secondes / 60 / 60);
+      minute = Math.floor(secondes / 60);
+      seconde = secondes % 60;
     } else {
-      minute = Math.floor(secondes/60);
-      seconde = secondes%60;
+      minute = Math.floor(secondes / 60);
+      seconde = secondes % 60;
     }
     if (heure != 0) res += heure + ":";
     res += (minute.toString().length == 1) ? "0" + minute + ":" : minute + ":";
