@@ -9,7 +9,9 @@
                     <button class="btn btn-dark d-flex" (click)="addPlaylist(musique, i)"><mat-icon>playlist_add</mat-icon><span>Ajouter à une playlist</span></button>
                 </div>
             </div>
-            <img class="col-12 p-0 click pochette mx-auto" [src]="musique.pochette" (click)="lecture(musique)" alt="image de la pochette de la musique"/>
+            <div class="col-12 p-0">
+                <img class="mx-auto d-block click pochette mx-auto" [src]="musique.pochette" (click)="lecture(musique)" alt="image de la pochette de la musique"/>
+            </div>
             <button class="col-auto px-1 text-white z-index1 fs-7" (click)="openArtiste(musique.Artiste)">{{musique.Artiste.nom}}</button>
             <span class="col text-end fst-italic click fs-7" (click)="lecture(musique)">{{convert(musique.duree)}}</span>
         </div>
